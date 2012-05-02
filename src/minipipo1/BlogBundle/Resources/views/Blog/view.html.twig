@@ -5,12 +5,21 @@
 {% endblock %}
 
 {% block minipipoblog_body %}
-        <h2><a href="{{ path('minipipoblog_voir', {'id': article.id}) }}">{{ article.titre }}</a></h2>
+        <h2><a href="{{ path('minipipoblog_show', {'id': article.id}) }}">{{ article.titre }}</a></h2>
         <p class="article">
                 {{ article.contenu }}
                 <p class="fin">
                         le {{ article.date|date('d/m/Y') }}
                 </p>
+                
+                {% for com in article.comments %}
+                <div class="comment">
+                        {{ com.content }}
+                        <p class="fin">
+                                le {{ com.date|date('d/m/Y') }}
+                        </p>
+                </div>
+                {% endfor %}
         </p>
         
 

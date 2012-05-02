@@ -81,8 +81,9 @@ class ArticleController extends Controller
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($entity);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('article_show', array('id' => $entity->getId())));
+            
+            $this->get('session')->setFlash('new_article',"L'article a bien été publié.");
+            return $this->redirect($this->generateUrl('minipipoblog_voir', array('id' => $entity->getId())));
             
         }
 

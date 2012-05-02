@@ -132,3 +132,11 @@ padding: 0 0 10px 0;
     line-height: 150%;
     text-align: right;
 }
+
+.comment
+{
+	margin: 10px 20px;
+	border: 1px solid black;
+	padding: 5px;
+	background-color: #f2f2f2;
+}

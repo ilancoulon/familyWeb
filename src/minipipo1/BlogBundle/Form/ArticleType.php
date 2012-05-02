@@ -10,7 +10,6 @@ class ArticleType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('date')
             ->add('titre')
             ->add('contenu')
         ;
@@ -19,5 +18,12 @@ class ArticleType extends AbstractType
     public function getName()
     {
         return 'minipipo1_blogbundle_articletype';
+    }
+    
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+            'data_class' => 'minipipo1\BlogBundle\Entity\Article',
+        );
     }
 }

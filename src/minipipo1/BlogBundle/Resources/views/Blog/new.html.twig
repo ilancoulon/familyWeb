@@ -1,0 +1,17 @@
+{% extends "minipipo1BlogBundle::layout.html.twig" %}
+
+{% block title %}
+	Rédiger un article - {{ parent() }}
+{% endblock %}
+
+{% block minipipoblog_body %}
+        <h2><a href="#">Nouvel article</a></h2>
+        <form action="{{ path('minipipoblog_new') }}" method="post" {{ form_enctype(form) }}>
+                {{ form_widget(form) }}
+                <p>
+                        <button type="submit">Publier</button>
+                </p>
+        </form>
+        
+
+{% endblock %}

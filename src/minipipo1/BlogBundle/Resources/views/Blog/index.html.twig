@@ -6,7 +6,7 @@
 
 {% block minipipoblog_body %}
         {% for article in articles %}
-                <h2><a href="{{ path('minipipoblog_voir', {'id': article.id}) }}">{{ article.titre }}</a></h2>
+                <h2><a href="{{ path('minipipoblog_show', {'id': article.id}) }}">{{ article.titre }}</a></h2>
                 <p class="article">
                         {{ article.contenu }}
                         <p class="fin">
