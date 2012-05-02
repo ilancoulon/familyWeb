@@ -1,0 +1,17 @@
+{% extends "::layout.html.twig" %}
+
+{% block title %}
+	Blog - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+	{% for key, flash in app.session.getFlashes() %}
+		<div class="alert alert-{{ key }}">
+			{{ flash }}
+		</div>
+	{% endfor %}
+
+	{% block minipipoblog_body %}
+	{% endblock %}
+
+{% endblock %}

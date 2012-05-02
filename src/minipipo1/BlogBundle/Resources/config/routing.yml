@@ -1,0 +1,17 @@
+minipipoblog_accueil:
+      pattern:  /
+      defaults: { _controller: minipipo1BlogBundle:Default:index }
+      
+minipipoblog_voir:
+      pattern: /article/{id}
+      defaults: { _controller: minipipo1BlogBundle:Default:view }
+      requirements:
+          page: \d+
+
+minipipoblog_ajouter:
+      pattern: /article/ecrire
+      defaults: { _controller: minipipo1BlogBundle:Default:add }
+
+sdzblog_crud:
+      resource: "routing/article.yml"
+      prefix:   /crud
