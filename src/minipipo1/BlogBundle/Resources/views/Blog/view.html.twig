@@ -7,20 +7,35 @@
 {% block minipipoblog_body %}
         <h2><a href="{{ path('minipipoblog_show', {'id': article.id}) }}">{{ article.titre }}</a></h2>
         <p class="article">
-                {{ article.contenu }}
+                {{ article.contenu|raw }}
                 <p class="fin">
-                        le {{ article.date|date('d/m/Y') }}
+                        le {{ article.date|date('d/m/Y à H:i') }}
                 </p>
                 
                 {% for com in article.comments %}
                 <div class="comment">
-                        {{ com.content }}
+                        {{ com.content|raw }}
                         <p class="fin">
-                                le {{ com.date|date('d/m/Y') }}
+                                le {{ com.date|date('d/m/Y à H:i') }}
                         </p>
                 </div>
                 {% endfor %}
+                <form action="{{ path('minipipoblog_show', { 'id': article.id }) }}" method="post" {{ form_enctype(form) }}>
+                        {{ form_widget(form) }}
+                        <p>
+                                <button type="submit">Publier</button>
+                        </p>
+                </form>
         </p>
         
 
+{% endblock %}
+        
+{% block javascripts %}
+        <script type="text/javascript" src="{{ asset('bundles/minipipo1blog/js/tiny_mce/tiny_mce.js') }}"></script>
+        <script type="text/javascript">
+                tinyMCE.init({
+                        mode : "textareas"
+                });
+        </script>
 {% endblock %}

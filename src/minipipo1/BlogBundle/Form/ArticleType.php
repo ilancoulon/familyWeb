@@ -11,7 +11,7 @@ class ArticleType extends AbstractType
     {
         $builder
             ->add('titre')
-            ->add('contenu')
+            ->add('contenu', 'textarea', array('required' => true))
         ;
     }
 

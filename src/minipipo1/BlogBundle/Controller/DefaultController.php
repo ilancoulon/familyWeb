@@ -5,6 +5,8 @@ namespace minipipo1\BlogBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use minipipo1\BlogBundle\Entity\Article;
 use minipipo1\BlogBundle\Form\ArticleType;
+use minipipo1\BlogBundle\Entity\Comment;
+use minipipo1\BlogBundle\Form\CommentType;
 
 class DefaultController extends Controller {
 
@@ -18,11 +20,33 @@ class DefaultController extends Controller {
                 $em = $this->getDoctrine()->getEntityManager();
                 $article = $em->getRepository('minipipo1BlogBundle:Article')->find($id);
                 
+                $comment = new Comment();
+                $comment->setArticle($article);
+                $form = $this->createForm(new CommentType(), $comment);
+                
+                $request = $this->get('request');
+                if( $request->getMethod() == 'POST' )
+                {
+                        $form->bindRequest($request);
+                        if( $form->isValid() )
+                        {
+                                $em = $this->getDoctrine()->getEntityManager();
+                                $em->persist($comment);
+                                $em->flush();
+
+                                $this->get('session')->setFlash('new_com',"Le commentaire a bien été publié.");
+                                return $this->redirect( $this->generateUrl('minipipoblog_show', array('id' => $id)) );
+                        }
+                }
+                
                 if (!$article) {
                         throw $this->createNotFoundException('Impossible de trouver cet article.');
                 }
                 
-                return $this->render('minipipo1BlogBundle:Blog:view.html.twig', array('article' => $article));
+                return $this->render('minipipo1BlogBundle:Blog:view.html.twig', array(
+                        'article' => $article,
+                        'form' => $form->createView(),
+                ));
         }
         
         public function newAction() {
@@ -40,7 +64,7 @@ class DefaultController extends Controller {
                                 $em->flush();
 
                                 $this->get('session')->setFlash('new_article',"L'article a bien été publié.");
-                                return $this->redirect( $this->generateUrl('minipipoblog_new') );
+                                return $this->redirect( $this->generateUrl('minipipoblog_index') );
                         }
                 }
                 
@@ -65,6 +89,26 @@ class DefaultController extends Controller {
                 'entity'      => $entity,
                 'edit_form'   => $editForm->createView(),
                 ));
+        }
+        
+        public function newComAction () {
+                $comment = new Comment();
+                $form = $this->createForm(new CommentType(), $comment);
+                
+                $request = $this->get('request');
+                if( $request->getMethod() == 'POST' )
+                {
+                        $form->bindRequest($request);
+                        if( $form->isValid() )
+                        {
+                                $em = $this->getDoctrine()->getEntityManager();
+                                $em->persist($comment);
+                                $em->flush();
+
+                                $this->get('session')->setFlash('new_com',"Le commentaire a bien été publié.");
+                                return $this->redirect( $this->generateUrl('minipipoblog_index') );
+                        }
+                }
         }
 
 }

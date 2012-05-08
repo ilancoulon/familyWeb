@@ -11,6 +11,10 @@ minipipoblog_show:
 minipipoblog_new:
       pattern: /article/ecrire
       defaults: { _controller: minipipo1BlogBundle:Default:new }
+      
+minipipoblog_new_com:
+      pattern: /com/ecrire
+      defaults: { _controller: minipipo1BlogBundle:Default:newCom }
 
 sdzblog_crud:
       resource: "routing/article.yml"
