@@ -41,6 +41,11 @@ class Membre
      * @ORM\Column(name="birth_date", type="date")
      */
     private $birth_date;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="minipipo1\UserBundle\Entity\User", inversedBy="membres")
+     */
+    private $user;
 
 
     /**
@@ -111,5 +116,13 @@ class Membre
     public function getBirthDate()
     {
         return $this->birth_date;
+    }
+    
+    public function getUser(){
+            return $this->user;
+    }
+    
+    public function setUser(\minipipo1\UserBundle\Entity\User $user) {
+            $this->client = $client;
     }
 }

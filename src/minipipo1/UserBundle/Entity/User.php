@@ -16,4 +16,18 @@ class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="minipipo1\UserBundle\Entity\Membre", mappedBy="user")
+     */
+    private $membres;
+    
+    public function getMembres(){
+            return $this->membres;
+    }
+    
+    public function addMembre(\minipipo1\UserBundle\Entity\Membre $membre) {
+            $this->membres[] = $membre;
+            $membre->setUser($this);
+    }
 }

@@ -47,6 +47,11 @@ class Article
      */
     private $comments;
     
+    /**
+     * @ORM\ManyToOne(targetEntity="minipipo1\UserBundle\Entity\Membre")
+     */
+    private $auteur;
+    
     public function __construct() {
             $this->date = new \Datetime();
     }
@@ -128,5 +133,13 @@ class Article
     public function addComment(\minipipo1\BlogBundle\Entity\Comment $comment) {
             $this->comments[] = $comment;
             $comment->setArticle($this);
+    }
+    
+    public function getAuteur() {
+            return $this->auteur;
+    }
+    
+    public function setAuteur(\minipipo1\UserBundle\Entity\Membre $auteur) {
+            $this->auteur = $auteur;
     }
 }
