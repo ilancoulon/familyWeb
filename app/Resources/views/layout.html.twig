@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <title>{% block title %}Coulonweb{% endblock %}</title>
-        <meta http-equiv="Content-Language" content="English" />
+        <meta http-equiv="Content-Language" content="French" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
 
@@ -23,7 +23,9 @@
             <div id="menu">
                 <ul>
                     <li><a href="{{ path('minipipoblog_index') }}">Accueil du blog</a></li>
-                    <li><a href="{{ path('minipipoblog_new') }}">Ajouter un articlce</a></li>
+                    {% if is_granted('ROLE_AUTEUR') %}
+                        <li><a href="{{ path('minipipoblog_new') }}">Ajouter un articlce</a></li>
+                    {% endif %}
                 </ul>
             </div>
 
@@ -34,33 +36,11 @@
                 </div>
 
                 <div class="right"> 
-
-                    <h2>Categories :</h2>
-                    <ul>
-                        <li><a href="#">World Politics</a></li> 
-                        <li><a href="#">Europe Sport</a></li> 
-                        <li><a href="#">Networking</a></li> 
-                        <li><a href="#">Nature - Africa</a></li>
-                        <li><a href="#">SuperCool</a></li> 
-                        <li><a href="#">Last Category</a></li>
-                    </ul>
-
-                    <h2>Archives</h2>
-                    <ul>
-                        <li><a href="#">January 2007</a></li> 
-                        <li><a href="#">February 2007</a></li> 
-                        <li><a href="#">March 2007</a></li> 
-                        <li><a href="#">April 2007</a></li>
-                        <li><a href="#">May 2007</a></li> 
-                        <li><a href="#">June 2007</a></li> 
-                        <li><a href="#">July 2007</a></li> 
-                        <li><a href="#">August 2007</a></li> 
-                        <li><a href="#">September 2007</a></li>
-                        <li><a href="#">October 2007</a></li>
-                        <li><a href="#">November 2007</a></li>
-                        <li><a href="#">December 2007</a></li>
-                    </ul>
-
+                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                        Connecté en tant que {{ app.user.username }} - <a href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
+                        {% else %}
+                        <a href="{{ path('fos_user_security_login') }}">Connexion</a>
+                        {% endif %}
                 </div>
                 <div style="clear: both;"> </div>
             </div>

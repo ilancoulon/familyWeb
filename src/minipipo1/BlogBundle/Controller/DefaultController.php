@@ -7,6 +7,7 @@ use minipipo1\BlogBundle\Entity\Article;
 use minipipo1\BlogBundle\Form\ArticleType;
 use minipipo1\BlogBundle\Entity\Comment;
 use minipipo1\BlogBundle\Form\CommentType;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 
 class DefaultController extends Controller {
 
@@ -49,6 +50,9 @@ class DefaultController extends Controller {
                 ));
         }
         
+        /**
+         * @Secure(roles="ROLE_AUTEUR")
+         */
         public function newAction() {
                 $article = new Article();
                 $form = $this->createForm(new ArticleType(), $article);
@@ -74,6 +78,9 @@ class DefaultController extends Controller {
                 ));
         }
         
+        /**
+         * @Secure(roles="ROLE_AUTEUR")
+         */
         public function editAction($id) {
                 $em = $this->getDoctrine()->getEntityManager();
 
@@ -91,6 +98,9 @@ class DefaultController extends Controller {
                 ));
         }
         
+        /**
+         * @Secure(roles="ROLE_AUTEUR")
+         */
         public function newComAction () {
                 $comment = new Comment();
                 $form = $this->createForm(new CommentType(), $comment);
