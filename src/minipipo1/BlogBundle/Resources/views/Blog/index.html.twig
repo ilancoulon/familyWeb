@@ -10,6 +10,7 @@
                 <p class="article">
                         {{ article.contenu|raw }}
                         <p class="fin">
+                                par {{ article.auteur.name }}<br />
                                 le {{ article.date|date('d/m/Y H:i') }}
                         </p>
                 </p>

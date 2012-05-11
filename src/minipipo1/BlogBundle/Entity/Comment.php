@@ -40,6 +40,11 @@ class Comment
      * @ORM\ManyToOne(targetEntity="minipipo1\BlogBundle\Entity\Article", inversedBy="comments")
      */
     private $article;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="minipipo1\UserBundle\Entity\Membre")
+     */
+    private $auteur;
 
     
     public function __construct() {
@@ -102,5 +107,13 @@ class Comment
     
     public function setArticle (\minipipo1\BlogBundle\Entity\Article $article) {
             $this->article = $article;
+    }
+    
+    public function getAuteur() {
+            return $this->auteur;
+    }
+    
+    public function setAuteur(\minipipo1\UserBundle\Entity\Membre $auteur) {
+            $this->auteur = $auteur;
     }
 }

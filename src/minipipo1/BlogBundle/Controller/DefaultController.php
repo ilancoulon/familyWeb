@@ -50,6 +50,12 @@ class DefaultController extends Controller {
                 ));
         }
         
+        function listAction() {
+                $em = $this->getDoctrine()->getEntityManager();
+                $articles = $em->getRepository('minipipo1BlogBundle:Article')->findAllDesc();
+                return $this->render('minipipo1BlogBundle:Blog:index.html.twig', array('articles' => $articles));
+        }
+        
         /**
          * @Secure(roles="ROLE_AUTEUR")
          */

@@ -9,6 +9,7 @@
         <p class="article">
                 {{ article.contenu|raw }}
                 <p class="fin">
+                        par {{ article.auteur.name }}<br />
                         le {{ article.date|date('d/m/Y à H:i') }}
                 </p>
                 
@@ -16,6 +17,7 @@
                 <div class="comment">
                         {{ com.content|raw }}
                         <p class="fin">
+                                par {{ com.auteur.name }}<br />
                                 le {{ com.date|date('d/m/Y à H:i') }}
                         </p>
                 </div>

@@ -12,6 +12,16 @@ class ArticleType extends AbstractType
         $builder
             ->add('titre')
             ->add('contenu', 'textarea', array('required' => true))
+            ->add('auteur', 'entity', array(
+                        'empty_value' => "Choisissez l'auteur",
+                        'required' => true,
+                        'class' => 'minipipo1UserBundle:Membre',
+                        'query_builder' => function(\minipipo1\UserBundle\Entity\MembreRepository $er) {
+                                return $er->createQueryBuilder('m')
+                                                ->where('m.user = :user')
+                                                ->setParameter('user', 2); // Ici l'id d'un utilisateur par exemple, ça fonctionne très bien
+                        },
+            ))
         ;
     }
 

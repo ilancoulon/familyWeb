@@ -6,11 +6,17 @@ minipipoblog_show:
       pattern: /article/voir/{id}
       defaults: { _controller: minipipo1BlogBundle:Default:view }
       requirements:
-          page: \d+
+          id: \d+
 
 minipipoblog_new:
       pattern: /article/ecrire
       defaults: { _controller: minipipo1BlogBundle:Default:new }
+      
+minipipoblog_edit:
+      pattern: /article/modifier/{id}
+      defaults: { _controller: minipipo1BlogBundle:Default:edit }
+      requirements:
+          id: \d+
       
 minipipoblog_new_com:
       pattern: /com/ecrire

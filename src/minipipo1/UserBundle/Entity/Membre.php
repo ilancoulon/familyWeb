@@ -125,4 +125,8 @@ class Membre
     public function setUser(\minipipo1\UserBundle\Entity\User $user) {
             $this->client = $client;
     }
+    
+    public function __toString() {
+            return $this->name;
+    }
 }
