@@ -7,6 +7,16 @@ minipipoblog_show:
       defaults: { _controller: minipipo1BlogBundle:Default:view }
       requirements:
           id: \d+
+          
+minipipoblog_redac:
+      pattern: /redaction
+      defaults: { _controller: minipipo1BlogBundle:Default:list }
+      
+minipipoblog_del:
+      pattern: /article/supprimer/{id}
+      defaults: { _controller: minipipo1BlogBundle:Default:del }
+      requirements:
+          id: \d+
 
 minipipoblog_new:
       pattern: /article/ecrire

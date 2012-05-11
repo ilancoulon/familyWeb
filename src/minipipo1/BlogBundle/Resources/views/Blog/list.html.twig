@@ -1,0 +1,31 @@
+{% extends "minipipo1BlogBundle::layout.html.twig" %}
+
+{% block title %}
+	Rédaction - {{ parent() }}
+{% endblock %}
+
+{% block minipipoblog_body %}
+        {% if articles|length > 0 %}
+                <table>
+                        <tr>
+                                <th>Action</th>
+                                <th>Titre</th>
+                                <th>Date</th>
+                                <th>Auteur</th>
+                        </tr>
+                        {% for article in articles %}
+                        <tr>
+                                <td>
+                                        <a href="{{ path('minipipoblog_edit', {'id': article.id}) }}"><img title="Modifier" alt="crayon" src="{{ asset('bundles/minipipo1blog/images/modif.png') }}" /></a>
+                                        <a href="{{ path('minipipoblog_del', {'id': article.id}) }}"><img title="Supprimer" alt="croix" src="{{ asset('bundles/minipipo1blog/images/suppr.gif') }}" /></a>
+                                </td>
+                                <td><a href="{{ path('minipipoblog_show', {'id': article.id}) }}">{{ article.titre }}</a></td>
+                                <td>{{ article.date|date('d/m/Y H:i') }}</td>
+                                <td>{{ article.auteur.name }}</td>
+                        </tr>
+                        {% endfor %}
+                </table>
+        {% else %}
+                <p>Pas encore d'articles !</p>
+        {% endif %}
+{% endblock %}
