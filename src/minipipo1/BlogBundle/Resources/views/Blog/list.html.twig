@@ -16,7 +16,7 @@
                         {% for article in articles %}
                         <tr>
                                 <td>
-                                        <a href="{{ path('minipipoblog_edit', {'id': article.id}) }}"><img title="Modifier" alt="crayon" src="{{ asset('bundles/minipipo1blog/images/modif.png') }}" /></a>
+                                        <a href="{{ path('minipipoblog_new', {'id': article.id}) }}"><img title="Modifier" alt="crayon" src="{{ asset('bundles/minipipo1blog/images/modif.png') }}" /></a>
                                         <a href="{{ path('minipipoblog_del', {'id': article.id}) }}"><img title="Supprimer" alt="croix" src="{{ asset('bundles/minipipo1blog/images/suppr.gif') }}" /></a>
                                 </td>
                                 <td><a href="{{ path('minipipoblog_show', {'id': article.id}) }}">{{ article.titre }}</a></td>

@@ -3,6 +3,7 @@
 namespace minipipo1\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * minipipo1\UserBundle\Entity\Membre
@@ -25,6 +26,7 @@ class Membre
      * @var string $name
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $name;
 
@@ -32,6 +34,7 @@ class Membre
      * @var string $mail
      *
      * @ORM\Column(name="mail", type="string", length=255)
+     * @Assert\Email()
      */
     private $mail;
 
@@ -39,6 +42,7 @@ class Membre
      * @var date $birth_date
      *
      * @ORM\Column(name="birth_date", type="date")
+     * @Assert\Date()
      */
     private $birth_date;
     

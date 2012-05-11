@@ -19,8 +19,10 @@ minipipoblog_del:
           id: \d+
 
 minipipoblog_new:
-      pattern: /article/ecrire
-      defaults: { _controller: minipipo1BlogBundle:Default:new }
+      pattern: /article/ecrire/{id}
+      defaults: { _controller: minipipo1BlogBundle:Default:new, id: false }
+      requirements:
+          id: \d+
       
 minipipoblog_edit:
       pattern: /article/modifier/{id}

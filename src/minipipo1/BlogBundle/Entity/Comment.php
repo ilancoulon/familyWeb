@@ -3,6 +3,7 @@
 namespace minipipo1\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * minipipo1\BlogBundle\Entity\Comment
@@ -25,6 +26,7 @@ class Comment
      * @var text $content
      *
      * @ORM\Column(name="content", type="text")
+     * @Assert\NotBlank()
      */
     private $content;
 
@@ -32,6 +34,7 @@ class Comment
      * @var datetime $date
      *
      * @ORM\Column(name="date", type="datetime")
+     * @Assert\DateTime()
      */
     private $date;
     

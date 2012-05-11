@@ -11,7 +11,7 @@ class ArticleType extends AbstractType
     {
         $builder
             ->add('titre')
-            ->add('contenu', 'textarea', array('required' => true))
+            ->add('contenu', 'textarea', array('required' => false)) // Le required à false est juste là pour empêcher que Symfony mette l'attribut required car il cause un bug à cause de TinyMCE
             ->add('auteur', 'entity', array(
                         'empty_value' => "Choisissez l'auteur",
                         'required' => true,

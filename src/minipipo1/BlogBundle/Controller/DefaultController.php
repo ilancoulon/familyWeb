@@ -50,6 +50,9 @@ class DefaultController extends Controller {
                 ));
         }
         
+        /**
+         * @Secure(roles="ROLE_AUTEUR")
+         */
         function listAction() {
                 $em = $this->getDoctrine()->getEntityManager();
                 $articles = $em->getRepository('minipipo1BlogBundle:Article')->findAllDesc();
@@ -59,8 +62,17 @@ class DefaultController extends Controller {
         /**
          * @Secure(roles="ROLE_AUTEUR")
          */
-        public function newAction() {
-                $article = new Article();
+        public function newAction($id) {
+                $em = $this->getDoctrine()->getEntityManager();
+                
+                if ($id) {
+                        $article = $em->getRepository('minipipo1BlogBundle:Article')->find($id);
+                        if (!$article)
+                                throw $this->createNotFoundException('Article introuvable.');
+                }
+                else
+                        $article = new Article();
+                
                 $form = $this->createForm(new ArticleType(), $article);
 
                 $request = $this->get('request');
@@ -69,7 +81,6 @@ class DefaultController extends Controller {
                         $form->bindRequest($request);
                         if( $form->isValid() )
                         {
-                                $em = $this->getDoctrine()->getEntityManager();
                                 $em->persist($article);
                                 $em->flush();
 

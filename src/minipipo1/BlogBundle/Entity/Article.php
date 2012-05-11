@@ -3,6 +3,8 @@
 namespace minipipo1\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\ExecutionContext;
 
 /**
  * minipipo1\BlogBundle\Entity\Article
@@ -25,6 +27,7 @@ class Article
      * @var datetime $date
      *
      * @ORM\Column(name="date", type="datetime")
+     * @Assert\DateTime()
      */
     private $date;
 
@@ -32,6 +35,7 @@ class Article
      * @var string $titre
      *
      * @ORM\Column(name="titre", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $titre;
 
@@ -39,6 +43,7 @@ class Article
      * @var text $contenu
      *
      * @ORM\Column(name="contenu", type="text")
+     * @Assert\NotBlank()
      */
     private $contenu;
     
@@ -48,6 +53,8 @@ class Article
     private $comments;
     
     /**
+     * @var minipipo1\UserBundle\Entity\Membre $auteur
+     * 
      * @ORM\ManyToOne(targetEntity="minipipo1\UserBundle\Entity\Membre")
      */
     private $auteur;
