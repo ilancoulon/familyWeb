@@ -73,7 +73,7 @@ class DefaultController extends Controller {
                 else
                         $article = new Article();
                 
-                $form = $this->createForm(new ArticleType(), $article);
+                $form = $this->createForm(new ArticleType($this->container->get('security.context')->getToken()->getUser()), $article);
 
                 $request = $this->get('request');
                 if( $request->getMethod() == 'POST' )
@@ -90,7 +90,7 @@ class DefaultController extends Controller {
                 }
                 
                 return $this->render('minipipo1BlogBundle:Blog:new.html.twig', array(
-                        'entity' => $article,
+                        'article' => $article,
                         'form'   => $form->createView()
                 ));
         }

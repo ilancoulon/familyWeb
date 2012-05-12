@@ -5,10 +5,11 @@
 {% endblock %}
 
 {% block minipipoblog_body %}
+        <h2><a href="{{ path('minipipoblog_new') }}">Rédiger un nouvel article</a></h2>
         {% if articles|length > 0 %}
                 <table>
                         <tr>
-                                <th>Action</th>
+                                <th>Actions</th>
                                 <th>Titre</th>
                                 <th>Date</th>
                                 <th>Auteur</th>
