@@ -59,8 +59,16 @@ class Article
      */
     private $auteur;
     
+    /**
+     * @var bool $del
+     * 
+     *  @ORM\Column(type="boolean")
+     */
+    private $del;
+    
     public function __construct() {
             $this->date = new \Datetime();
+            $this->del = false;
     }
 
         /**
@@ -136,7 +144,6 @@ class Article
     public function getComments() {
             return $this->comments;
     }
-    
     public function addComment(\minipipo1\BlogBundle\Entity\Comment $comment) {
             $this->comments[] = $comment;
             $comment->setArticle($this);
@@ -145,8 +152,14 @@ class Article
     public function getAuteur() {
             return $this->auteur;
     }
-    
     public function setAuteur(\minipipo1\UserBundle\Entity\Membre $auteur) {
             $this->auteur = $auteur;
+    }
+    
+    public function getDel() {
+            return $this->del;
+    }
+    public function setDel(bool $del) {
+            $this->del = $del;
     }
 }

@@ -4,10 +4,9 @@
         <title>{% block title %}Coulonweb{% endblock %}</title>
         <meta http-equiv="Content-Language" content="French" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
-
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('css/style.css') }}" type="text/css" />
+            <link type="text/css" href="{{ asset('css/custom-theme/jquery-ui-1.8.20.custom.css') }}" rel="stylesheet" />
         {% endblock %}
     </head>
     <body>
@@ -52,5 +51,12 @@
 
     </body>
     {% block javascripts %}
+                <script type="text/javascript" src="{{ asset('js/jquery-1.7.2.min.js') }}"></script>
+                <script type="text/javascript" src="{{ asset('js/jquery-ui-1.8.20.custom.min.js') }}"></script>
+                <script type="text/javascript">
+                        $(document).ready(function() {
+                                
+                        });
+                </script>
     {% endblock %}
 </html>

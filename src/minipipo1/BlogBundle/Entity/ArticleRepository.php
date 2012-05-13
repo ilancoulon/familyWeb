@@ -18,4 +18,20 @@ class ArticleRepository extends EntityRepository
                                  ->getQuery()
                                  ->getResult();
         }
+        
+        public function listArticle(\Symfony\Component\Security\Core\SecurityContext $context) {
+                $queryBuilder = $this->createQueryBuilder('a')
+                        ->select('a')
+                        ->orderBy("a.date", "DESC");
+                if (!$context->isGranted("ROLE_MODERATEUR")) {
+                        $queryBuilder
+                                ->join('a.auteur', 'm')
+                                ->addSelect('m')
+                                ->where("m.user = :user")
+                                ->setParameter('user', $context->getToken()->getUser());
+                }
+                $test = $queryBuilder->getQuery();
+                return $queryBuilder->getQuery()
+                                                ->getResult();
+        }
 }

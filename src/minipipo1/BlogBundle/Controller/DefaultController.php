@@ -55,7 +55,7 @@ class DefaultController extends Controller {
          */
         function listAction() {
                 $em = $this->getDoctrine()->getEntityManager();
-                $articles = $em->getRepository('minipipo1BlogBundle:Article')->findAllDesc();
+                $articles = $em->getRepository('minipipo1BlogBundle:Article')->listArticle($this->container->get('security.context'));
                 return $this->render('minipipo1BlogBundle:Blog:list.html.twig', array('articles' => $articles));
         }
         
