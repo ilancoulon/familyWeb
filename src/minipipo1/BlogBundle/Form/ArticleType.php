@@ -26,10 +26,14 @@ class ArticleType extends AbstractType
                         'empty_value' => "Choisissez l'auteur",
                         'required' => true,
                         'class' => 'minipipo1UserBundle:Membre',
-                        'query_builder' => function(\minipipo1\UserBundle\Entity\MembreRepository $er)  use ($cu) {
+                        'query_builder' => function(\minipipo1\UserBundle\Entity\MembreRepository $er)  use ($options, $cu) {
+                                if ($options["data"]->getId())
+                                        $user = $options["data"]->getAuteur()->getUser();
+                                else
+                                        $user = $cu;
                                 return $er->createQueryBuilder('m')
                                                 ->where('m.user = :user')
-                                                ->setParameter('user', $cu);
+                                                ->setParameter('user', $user);
                         },
             ))
         ;

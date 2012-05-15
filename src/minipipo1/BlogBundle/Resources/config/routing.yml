@@ -20,7 +20,7 @@ minipipoblog_del:
 
 minipipoblog_new:
       pattern: /article/ecrire/{id}
-      defaults: { _controller: minipipo1BlogBundle:Default:new, id: false }
+      defaults: { _controller: minipipo1BlogBundle:Default:new, id: 0 }
       requirements:
           id: \d+
       

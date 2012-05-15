@@ -56,6 +56,7 @@ class Article
      * @var minipipo1\UserBundle\Entity\Membre $auteur
      * 
      * @ORM\ManyToOne(targetEntity="minipipo1\UserBundle\Entity\Membre")
+     * @Assert\NotBlank()
      */
     private $auteur;
     
@@ -159,7 +160,7 @@ class Article
     public function getDel() {
             return $this->del;
     }
-    public function setDel(bool $del) {
+    public function setDel($del) {
             $this->del = $del;
     }
 }

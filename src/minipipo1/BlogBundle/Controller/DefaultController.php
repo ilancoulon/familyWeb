@@ -8,6 +8,8 @@ use minipipo1\BlogBundle\Form\ArticleType;
 use minipipo1\BlogBundle\Entity\Comment;
 use minipipo1\BlogBundle\Form\CommentType;
 use JMS\SecurityExtraBundle\Annotation\Secure;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class DefaultController extends Controller {
 
@@ -17,13 +19,10 @@ class DefaultController extends Controller {
                 return $this->render('minipipo1BlogBundle:Blog:index.html.twig', array('articles' => $articles));
         }
         
-        public function viewAction($id) {
-                $em = $this->getDoctrine()->getEntityManager();
-                $article = $em->getRepository('minipipo1BlogBundle:Article')->find($id);
-                
+        public function viewAction(Article $article) {
                 $comment = new Comment();
                 $comment->setArticle($article);
-                $form = $this->createForm(new CommentType(), $comment);
+                $form = $this->createForm(new CommentType($this->container->get('security.context')->getToken()->getUser()), $comment);
                 
                 $request = $this->get('request');
                 if( $request->getMethod() == 'POST' )
@@ -36,12 +35,8 @@ class DefaultController extends Controller {
                                 $em->flush();
 
                                 $this->get('session')->setFlash('new_com',"Le commentaire a bien été publié.");
-                                return $this->redirect( $this->generateUrl('minipipoblog_show', array('id' => $id)) );
+                                return $this->redirect( $this->generateUrl('minipipoblog_show', array('id' => $article->getId())) );
                         }
-                }
-                
-                if (!$article) {
-                        throw $this->createNotFoundException('Impossible de trouver cet article.');
                 }
                 
                 return $this->render('minipipo1BlogBundle:Blog:view.html.twig', array(
@@ -65,13 +60,17 @@ class DefaultController extends Controller {
         public function newAction($id) {
                 $em = $this->getDoctrine()->getEntityManager();
                 
-                if ($id) {
+                if (!$id) {
+                        $article = new Article();
+                }
+                else {
                         $article = $em->getRepository('minipipo1BlogBundle:Article')->find($id);
                         if (!$article)
                                 throw $this->createNotFoundException('Article introuvable.');
+                        if (!($this->get('security.context')->isGranted('ROLE_MODERATEUR') || $article->getAuteur()->getUser() == $this->container->get('security.context')->getToken()->getUser())) {
+                                throw new AccessDeniedHttpException('Vous n\'avez pas le droit d\'éditer cet article.');
+                        }
                 }
-                else
-                        $article = new Article();
                 
                 $form = $this->createForm(new ArticleType($this->container->get('security.context')->getToken()->getUser()), $article);
 
@@ -81,7 +80,6 @@ class DefaultController extends Controller {
                         $form->bindRequest($request);
                         if( $form->isValid() )
                         {
-                                $em->persist($article);
                                 $em->flush();
 
                                 $this->get('session')->setFlash('new_article',"L'article a bien été publié.");
@@ -92,26 +90,6 @@ class DefaultController extends Controller {
                 return $this->render('minipipo1BlogBundle:Blog:new.html.twig', array(
                         'article' => $article,
                         'form'   => $form->createView()
-                ));
-        }
-        
-        /**
-         * @Secure(roles="ROLE_AUTEUR")
-         */
-        public function editAction($id) {
-                $em = $this->getDoctrine()->getEntityManager();
-
-                $entity = $em->getRepository('minipipo1BlogBundle:Article')->find($id);
-
-                if (!$entity) {
-                        throw $this->createNotFoundException('Article introuvable.');
-                }
-
-                $editForm = $this->createForm(new ArticleType(), $entity);
-
-                return $this->render('minipipo1BlogBundle:Article:edit.html.twig', array(
-                'entity'      => $entity,
-                'edit_form'   => $editForm->createView(),
                 ));
         }
         

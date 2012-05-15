@@ -50,6 +50,13 @@ class Membre
      * @ORM\ManyToOne(targetEntity="minipipo1\UserBundle\Entity\User", inversedBy="membres")
      */
     private $user;
+    
+    /**
+     * @var bool $wantEmail 
+     * 
+     * @ORM\Column(name="wantEmail", type="boolean")
+     */
+    private $wantEmail;
 
 
     /**
@@ -127,10 +134,17 @@ class Membre
     }
     
     public function setUser(\minipipo1\UserBundle\Entity\User $user) {
-            $this->client = $client;
+            $this->user = $user;
     }
     
     public function __toString() {
             return $this->name;
+    }
+    
+    public function getWantEmail() {
+            return $this->wantEmail;
+    }
+    public function setWantEmail($wantEmail) {
+            $this->wantEmail = $wantEmail;
     }
 }
