@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new minipipo1\BlogBundle\minipipo1BlogBundle(),
             new minipipo1\UserBundle\minipipo1UserBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

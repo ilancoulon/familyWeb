@@ -39,13 +39,14 @@ class Comment
     private $date;
     
     /**
-     *
      * @ORM\ManyToOne(targetEntity="minipipo1\BlogBundle\Entity\Article", inversedBy="comments")
+     * @Assert\NotBlank()
      */
     private $article;
     
     /**
      * @ORM\ManyToOne(targetEntity="minipipo1\UserBundle\Entity\Membre")
+     * @Assert\NotBlank()
      */
     private $auteur;
 
