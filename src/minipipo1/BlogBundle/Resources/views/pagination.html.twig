@@ -1,0 +1,56 @@
+{% if pageCount > 1 %}
+<div class="short_pagination">
+        {% if previous is defined %}
+                <span class="previous">
+                        <a href="{{ path(route, query|merge({(pageParameterName): previous})) }}">&lt;</a>
+                </span>
+        {% endif %}
+        {% if current > (first + pageRange/2) %}
+                <span class="first">
+                        <a href="{{ path(route, query|merge({(pageParameterName): first})) }}">{{ first }}</a>
+                        {% if current > (first + pageRange/2 + 1) %}
+                                ...
+                        {% endif %}
+                </span>
+        {% endif %}
+
+        {% for page in pagesInRange %}
+                {% if page != current %}
+                        <span class="page">
+                                <a href="{{ path(route, query|merge({(pageParameterName): page})) }}">{{ page }}</a>
+                        </span>
+                {% else %}
+                        <span class="current">{{ page }}</span>
+                {% endif %}
+
+        {% endfor %}
+        {% if current < last - (pageRange/2) %}
+                <span class="last">
+                        {% if current < last - (pageRange/2 + 1) %}
+                                ...
+                        {% endif %}
+                        <a href="{{ path(route, query|merge({(pageParameterName): last})) }}">{{ last }}</a>
+                </span>
+        {% endif %}
+        {% if next is defined %}
+                <span class="next">
+                        <a href="{{ path(route, query|merge({(pageParameterName): next})) }}">&gt;</a>
+                </span>
+        {% endif %}
+        <br />
+        <button type="button" title="Afficher plus" class="display_pages"> + </button>
+</div>
+<div class="complete_pagination" style="display: none">
+        {% for page in first..last %}
+                {% if page != current %}
+                        <span class="page">
+                                <a href="{{ path(route, query|merge({(pageParameterName): page})) }}">{{ page }}</a>
+                        </span>
+                {% else %}
+                        <span class="current">{{ page }}</span>
+                {% endif %}
+        {% endfor %}
+        <br />
+        <button type="button" title="Afficher moins" class="display_pages"> - </button>
+</div>
+{% endif %}

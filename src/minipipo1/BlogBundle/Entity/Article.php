@@ -65,11 +65,10 @@ class Article
      * 
      *  @ORM\Column(type="boolean")
      */
-    private $del;
+    private $del = false;
     
     public function __construct() {
             $this->date = new \Datetime();
-            $this->del = false;
     }
 
         /**

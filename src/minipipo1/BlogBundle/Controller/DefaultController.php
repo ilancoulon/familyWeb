@@ -13,10 +13,22 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class DefaultController extends Controller {
 
-        public function indexAction() {
+        public function indexAction($page) {
                 $em = $this->getDoctrine()->getEntityManager();
                 $articles = $em->getRepository('minipipo1BlogBundle:Article')->findAllDesc();
-                return $this->render('minipipo1BlogBundle:Blog:index.html.twig', array('articles' => $articles));
+                
+                // Pagination
+                $paginator = $this->get('knp_paginator');
+                $pagination = $paginator->paginate(
+                        $articles,
+                        $page
+                );
+                
+                $pagination_data = $pagination->getPaginationData();
+                if ($page >$pagination_data["pageCount"])
+                         throw $this->createNotFoundException('Page inexistante.');
+                
+                return $this->render('minipipo1BlogBundle:Blog:index.html.twig', array('pagination' => $pagination));
         }
         
         public function viewAction(Article $article) {

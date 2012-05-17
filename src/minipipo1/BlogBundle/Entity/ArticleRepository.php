@@ -15,8 +15,7 @@ class ArticleRepository extends EntityRepository
         public function findAllDesc() {
                 return $this->createQueryBuilder('a')
                                  ->orderBy("a.date", "DESC")
-                                 ->getQuery()
-                                 ->getResult();
+                                 ->getQuery();
         }
         
         public function listArticle(\Symfony\Component\Security\Core\SecurityContext $context) {

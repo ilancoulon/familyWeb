@@ -1,21 +1,49 @@
 {% extends "minipipo1BlogBundle::layout.html.twig" %}
 
 {% block title %}
-	Accueil - {{ parent() }}
+Accueil - {{ parent() }}
 {% endblock %}
 
 {% block minipipoblog_body %}
-        {% for article in articles %}
-                <h2><a href="{{ path('minipipoblog_show', {'id': article.id}) }}">{{ article.titre }}</a></h2>
-                <p class="article">
+<div class="pagination">
+                {{ pagination.render()|raw }}
+        </div>
+        {% for article in pagination %}
+        <h2><a href="{{ path('minipipoblog_show', {'id': article.id}) }}">{{ article.titre }}</a></h2>
+        <p class="article">
                         {{ article.contenu|raw }}
-                        <p class="fin">
-                                par {{ article.auteur.name }}<br />
-                                le {{ article.date|date('d/m/Y H:i') }}
-                        </p>
+                <p class="fin">
+                        par {{ article.auteur.name }}<br />
+                        le {{ article.date|date('d/m/Y H:i') }}
                 </p>
+        </p>
         {% else %}
-                <h2><a href="#">Pas encore d'articles !</a></h2>
+        <h2><a href="#">Pas encore d'articles !</a></h2>
         {% endfor %}
-
+        <div class="pagination">
+                {{ pagination.render()|raw }}
+        </div>
+{% endblock %}
+        
+{% block javascripts %}
+        {{ parent() }}
+        
+        <script type="text/javascript">
+                $(document).ready(function() {
+                        console.log("READY");
+                        $(".display_pages").click(function () {
+                                console.log("EVENT");
+                                if ($(".short_pagination").css("display") == "none") {
+                                        console.log("MOINS");
+                                        $(".complete_pagination").css("display", "none");
+                                        $(".short_pagination").css("display", "inline");
+                                }
+                                else {
+                                        console.log("PLUS");
+                                        $(".short_pagination").css("display", "none");
+                                        $(".complete_pagination").css("display", "inline");
+                                }
+                        });
+                });
+        </script>
 {% endblock %}

@@ -1,6 +1,8 @@
 minipipoblog_index:
-      pattern:  /
-      defaults: { _controller: minipipo1BlogBundle:Default:index }
+      pattern:  /{page}
+      defaults: { _controller: minipipo1BlogBundle:Default:index, page: 1 }
+      requirements:
+          page: \d+
       
 minipipoblog_show:
       pattern: /article/voir/{id}
@@ -13,25 +15,25 @@ minipipoblog_redac:
       defaults: { _controller: minipipo1BlogBundle:Default:list }
       
 minipipoblog_del:
-      pattern: /article/supprimer/{id}
+      pattern: /redaction/article/supprimer/{id}
       defaults: { _controller: minipipo1BlogBundle:Default:del }
       requirements:
           id: \d+
 
 minipipoblog_new:
-      pattern: /article/ecrire/{id}
+      pattern: /redaction/article/{id}
       defaults: { _controller: minipipo1BlogBundle:Default:new, id: 0 }
       requirements:
           id: \d+
       
 minipipoblog_edit:
-      pattern: /article/modifier/{id}
+      pattern: /redaction/article/modifier/{id}
       defaults: { _controller: minipipo1BlogBundle:Default:edit }
       requirements:
           id: \d+
       
 minipipoblog_new_com:
-      pattern: /com/ecrire
+      pattern: /commentaire/ecrire
       defaults: { _controller: minipipo1BlogBundle:Default:newCom }
 
 sdzblog_crud:
