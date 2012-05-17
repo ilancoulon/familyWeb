@@ -23,6 +23,7 @@
                 </div>
         {% endfor %}
         <form action="#" method="post" {{ form_enctype(form) }}>
+                {{ form_errors(form) }}
                 <div>
                         <span style="text-decoration: underline">{{ form_label(form.auteur, "Écrire un commentaire :") }}</span>
                         {{ form_errors(form.content) }}
