@@ -31,7 +31,7 @@ class DefaultController extends Controller {
                 return $this->render('minipipo1BlogBundle:Blog:index.html.twig', array('pagination' => $pagination));
         }
         
-        public function viewAction(Article $article) {
+        public function viewAction(Article $article, $page) {
                 $comment = new Comment();
                 $comment->setArticle($article);
                 $form = $this->createForm(new CommentType($this->container->get('security.context')->getToken()->getUser()), $comment);
@@ -53,8 +53,21 @@ class DefaultController extends Controller {
                         }
                 }
                 
+                $coms = $this->getDoctrine()->getEntityManager()->getRepository('minipipo1BlogBundle:Comment')->findAllDesc($article);
+                // Pagination
+                $paginator = $this->get('knp_paginator');
+                $pagination = $paginator->paginate(
+                        $coms,
+                        $page
+                );
+                
+                $pagination_data = $pagination->getPaginationData();
+                if ($page >$pagination_data["pageCount"])
+                         throw $this->createNotFoundException('Page inexistante.');
+                
                 return $this->render('minipipo1BlogBundle:Blog:view.html.twig', array(
                         'article' => $article,
+                        'pagination'    => $pagination,
                         'form' => $form->createView(),
                 ));
         }

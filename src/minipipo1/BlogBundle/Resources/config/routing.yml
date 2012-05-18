@@ -5,10 +5,11 @@ minipipoblog_index:
           page: \d+
       
 minipipoblog_show:
-      pattern: /article/voir/{id}
-      defaults: { _controller: minipipo1BlogBundle:Default:view }
+      pattern: /article/voir/{id}/{page}
+      defaults: { _controller: minipipo1BlogBundle:Default:view, page: 1 }
       requirements:
           id: \d+
+          page: \d+
           
 minipipoblog_redac:
       pattern: /redaction/{page}

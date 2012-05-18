@@ -12,4 +12,11 @@ use Doctrine\ORM\EntityRepository;
  */
 class CommentRepository extends EntityRepository
 {
+        public function findAllDesc(Article $article) {
+                return $this->createQueryBuilder('c')
+                                 ->where("c.article = :article")
+                                 ->setParameter("article", $article)
+                                 ->orderBy("c.date", "DESC")
+                                 ->getQuery();
+        }
 }
