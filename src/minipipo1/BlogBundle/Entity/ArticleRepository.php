@@ -29,8 +29,7 @@ class ArticleRepository extends EntityRepository
                                 ->where("m.user = :user")
                                 ->setParameter('user', $context->getToken()->getUser());
                 }
-                $test = $queryBuilder->getQuery();
-                return $queryBuilder->getQuery()
-                                                ->getResult();
+                
+                return $queryBuilder->getQuery();
         }
 }

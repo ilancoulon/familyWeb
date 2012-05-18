@@ -11,8 +11,10 @@ minipipoblog_show:
           id: \d+
           
 minipipoblog_redac:
-      pattern: /redaction
-      defaults: { _controller: minipipo1BlogBundle:Default:list }
+      pattern: /redaction/{page}
+      defaults: { _controller: minipipo1BlogBundle:Default:list, page: 1 }
+      requirements:
+          page: \d+
       
 minipipoblog_del:
       pattern: /redaction/article/supprimer/{id}

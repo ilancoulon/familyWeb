@@ -3,18 +3,42 @@
 {% block title %}
 	Rédaction - {{ parent() }}
 {% endblock %}
+        
+{% block stylesheets %}
+        {{ parent() }}
+        
+        <style>
+                .listArticles {
+                        width: 100%;
+                }
+                .listArticles th {
+                        border-style: solid;
+                        border-width: 1px;
+                        margin-top: 200px;
+                        text-align: center;
+                        width: 200px;
+                }
+                .listArticles td {
+                        line-height: 150%;
+                        text-align: center;
+                }
+        </style>
+{% endblock %}
 
 {% block minipipoblog_body %}
         <h2><a href="{{ path('minipipoblog_new') }}">Rédiger un nouvel article</a></h2>
-        {% if articles|length > 0 %}
-                <table>
+        <div class="pagination">
+                {{ pagination.render()|raw }}
+        </div>
+        {% if pagination|length > 0 %}
+                <table class="listArticles">
                         <tr>
                                 <th>Actions</th>
                                 <th>Titre</th>
                                 <th>Date</th>
                                 <th>Auteur</th>
                         </tr>
-                        {% for article in articles %}
+                        {% for article in pagination %}
                         <tr>
                                 <td>
                                         <a href="{{ path('minipipoblog_new', {'id': article.id}) }}"><img title="Modifier" alt="crayon" src="{{ asset('bundles/minipipo1blog/images/modif.png') }}" /></a>
@@ -30,3 +54,27 @@
                 <p>Pas encore d'articles !</p>
         {% endif %}
 {% endblock %}
+                
+{% block javascripts %}
+        {{ parent() }}
+        
+        <script type="text/javascript">
+                $(document).ready(function() {
+                        console.log("READY");
+                        $(".display_pages").click(function () {
+                                console.log("EVENT");
+                                if ($(".short_pagination").css("display") == "none") {
+                                        console.log("MOINS");
+                                        $(".complete_pagination").css("display", "none");
+                                        $(".short_pagination").css("display", "inline");
+                                }
+                                else {
+                                        console.log("PLUS");
+                                        $(".short_pagination").css("display", "none");
+                                        $(".complete_pagination").css("display", "inline");
+                                }
+                        });
+                });
+        </script>
+{% endblock %}
+        

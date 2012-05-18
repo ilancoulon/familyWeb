@@ -7,7 +7,7 @@ Accueil - {{ parent() }}
 {% block minipipoblog_body %}
 <div class="pagination">
                 {{ pagination.render()|raw }}
-        </div>
+</div>
         {% for article in pagination %}
         <h2><a href="{{ path('minipipoblog_show', {'id': article.id}) }}">{{ article.titre }}</a></h2>
         <p class="article">

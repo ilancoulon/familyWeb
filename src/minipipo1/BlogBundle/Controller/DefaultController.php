@@ -62,10 +62,23 @@ class DefaultController extends Controller {
         /**
          * @Secure(roles="ROLE_AUTEUR")
          */
-        function listAction() {
+        function listAction($page) {
                 $em = $this->getDoctrine()->getEntityManager();
                 $articles = $em->getRepository('minipipo1BlogBundle:Article')->listArticle($this->container->get('security.context'));
-                return $this->render('minipipo1BlogBundle:Blog:list.html.twig', array('articles' => $articles));
+                
+                // Pagination
+                $paginator = $this->get('knp_paginator');
+                $pagination = $paginator->paginate(
+                        $articles,
+                        $page,
+                        50
+                );
+                
+                $pagination_data = $pagination->getPaginationData();
+                if ($page >$pagination_data["pageCount"])
+                         throw $this->createNotFoundException('Page inexistante.');
+                
+                return $this->render('minipipo1BlogBundle:Blog:list.html.twig', array('pagination' => $pagination));
         }
         
         /**
