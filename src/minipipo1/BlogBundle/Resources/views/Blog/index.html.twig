@@ -20,9 +20,9 @@ Accueil - {{ parent() }}
         {% else %}
         <h2><a href="#">Pas encore d'articles !</a></h2>
         {% endfor %}
-        <div class="pagination">
-                {{ pagination.render()|raw }}
-        </div>
+<div class="pagination">
+        {{ pagination.render()|raw }}
+</div>
 {% endblock %}
         
 {% block javascripts %}
@@ -30,19 +30,9 @@ Accueil - {{ parent() }}
         
         <script type="text/javascript">
                 $(document).ready(function() {
-                        console.log("READY");
                         $(".display_pages").click(function () {
-                                console.log("EVENT");
-                                if ($(".short_pagination").css("display") == "none") {
-                                        console.log("MOINS");
-                                        $(".complete_pagination").css("display", "none");
-                                        $(".short_pagination").css("display", "inline");
-                                }
-                                else {
-                                        console.log("PLUS");
-                                        $(".short_pagination").css("display", "none");
-                                        $(".complete_pagination").css("display", "inline");
-                                }
+                                $(".complete_pagination").toggle("blind");
+                                $(".short_pagination").toggle("blind");
                         });
                 });
         </script>

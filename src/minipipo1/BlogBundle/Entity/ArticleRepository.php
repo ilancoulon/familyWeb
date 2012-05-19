@@ -14,6 +14,7 @@ class ArticleRepository extends EntityRepository
 {
         public function findAllDesc() {
                 return $this->createQueryBuilder('a')
+                                 ->where("a.del = false")
                                  ->orderBy("a.date", "DESC")
                                  ->getQuery();
         }
@@ -21,6 +22,7 @@ class ArticleRepository extends EntityRepository
         public function listArticle(\Symfony\Component\Security\Core\SecurityContext $context) {
                 $queryBuilder = $this->createQueryBuilder('a')
                         ->select('a')
+                        ->where("a.del = false")
                         ->orderBy("a.date", "DESC");
                 if (!$context->isGranted("ROLE_MODERATEUR")) {
                         $queryBuilder

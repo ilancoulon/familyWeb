@@ -31,7 +31,12 @@ class DefaultController extends Controller {
                 return $this->render('minipipo1BlogBundle:Blog:index.html.twig', array('pagination' => $pagination));
         }
         
-        public function viewAction(Article $article, $page) {
+        public function viewAction($id, $page) {
+                if((!$article = $this->getDoctrine()->getEntityManager()->getRepository('minipipo1BlogBundle:Article')->find($id)))
+                        throw $this->createNotFoundException("Cet article n'existe pas.");
+                if ($article->getDel())
+                        throw $this->createNotFoundException ("Cet article a été supprimé.");
+
                 $comment = new Comment();
                 $comment->setArticle($article);
                 $form = $this->createForm(new CommentType($this->container->get('security.context')->getToken()->getUser()), $comment);
@@ -62,7 +67,7 @@ class DefaultController extends Controller {
                 );
                 
                 $pagination_data = $pagination->getPaginationData();
-                if ($page >$pagination_data["pageCount"])
+                if ($page >$pagination_data["pageCount"] && $pagination_data["pageCount"] > 0)
                          throw $this->createNotFoundException('Page inexistante.');
                 
                 return $this->render('minipipo1BlogBundle:Blog:view.html.twig', array(
@@ -131,6 +136,24 @@ class DefaultController extends Controller {
                         'article' => $article,
                         'form'   => $form->createView()
                 ));
+        }
+        
+        /**
+         * @Secure(roles="ROLE_AUTEUR")
+         */
+        public function delAction(Article $article) {
+                if (!($this->get('security.context')->isGranted('ROLE_MODERATEUR') || $article->getAuteur()->getUser() == $this->container->get('security.context')->getToken()->getUser())) {
+                        throw new AccessDeniedHttpException('Vous n\'avez pas le droit d\'éditer cet article.');
+                }
+                
+                $em = $this->getDoctrine()->getEntityManager();
+                
+                $article->setDel(true);
+                
+                $em->flush();
+                
+                $this->get('session')->setFlash('de_article',"L'article a bien été supprimé.");
+                return $this->redirect( $this->generateUrl('minipipoblog_redac') );
         }
         
         /**

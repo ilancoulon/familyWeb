@@ -42,14 +42,18 @@
                         <tr>
                                 <td>
                                         <a href="{{ path('minipipoblog_new', {'id': article.id}) }}"><img title="Modifier" alt="crayon" src="{{ asset('bundles/minipipo1blog/images/modif.png') }}" /></a>
-                                        <a href="{{ path('minipipoblog_del', {'id': article.id}) }}"><img title="Supprimer" alt="croix" src="{{ asset('bundles/minipipo1blog/images/suppr.gif') }}" /></a>
+                                        <a href="{{ path('minipipoblog_del', {'id': article.id}) }}" class="del_article" id="img_suppr_{{ article.id }}"><img title="Supprimer" alt="croix" src="{{ asset('bundles/minipipo1blog/images/suppr.gif') }}" /></a>
                                 </td>
-                                <td><a href="{{ path('minipipoblog_show', {'id': article.id}) }}">{{ article.titre }}</a></td>
+                                <td><a href="{{ path('minipipoblog_show', {'id': article.id}) }}" id="title_{{ article.id }}">{{ article.titre }}</a></td>
                                 <td>{{ article.date|date('d/m/Y H:i') }}</td>
                                 <td>{{ article.auteur.name }}</td>
                         </tr>
                         {% endfor %}
                 </table>
+        <div id="popup_del" style="display: none">
+                Êtes-vous-sûr de vouloir supprimer <a href="#" id="a_popup_suppr"></a> ?<br />
+                (Cette action est réversible par simple demande à l'administrateur)
+        </div>
         {% else %}
                 <p>Pas encore d'articles !</p>
         {% endif %}
@@ -60,19 +64,29 @@
         
         <script type="text/javascript">
                 $(document).ready(function() {
-                        console.log("READY");
                         $(".display_pages").click(function () {
-                                console.log("EVENT");
-                                if ($(".short_pagination").css("display") == "none") {
-                                        console.log("MOINS");
-                                        $(".complete_pagination").css("display", "none");
-                                        $(".short_pagination").css("display", "inline");
-                                }
-                                else {
-                                        console.log("PLUS");
-                                        $(".short_pagination").css("display", "none");
-                                        $(".complete_pagination").css("display", "inline");
-                                }
+                                $(".complete_pagination").toggle("blind");
+                                $(".short_pagination").toggle("blind");
+                        });
+                        $(".del_article").click(function () {
+                                var id = $(this).attr("id").split("_")[2];
+                                var url_del = $(this).attr("href");
+                                
+                                $("#a_popup_suppr").attr("href", $("#title_"+id).attr("href"));
+                                $("#a_popup_suppr").html($("#title_"+id).html());
+                                $("#popup_del").dialog({
+                                        modal: true,
+                                        buttons: {
+                                                "Oui": function () {
+                                                        window.location = url_del;
+                                                },
+                                                "Non": function () {
+                                                        $(this).dialog("close");
+                                                }
+                                        }
+                                });
+                                
+                                return false;
                         });
                 });
         </script>
