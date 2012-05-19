@@ -38,7 +38,3 @@ minipipoblog_edit:
 minipipoblog_new_com:
       pattern: /commentaire/ecrire
       defaults: { _controller: minipipo1BlogBundle:Default:newCom }
-
-sdzblog_crud:
-      resource: "routing/article.yml"
-      prefix:   /crud

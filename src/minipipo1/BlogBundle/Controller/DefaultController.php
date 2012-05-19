@@ -143,7 +143,7 @@ class DefaultController extends Controller {
          */
         public function delAction(Article $article) {
                 if (!($this->get('security.context')->isGranted('ROLE_MODERATEUR') || $article->getAuteur()->getUser() == $this->container->get('security.context')->getToken()->getUser())) {
-                        throw new AccessDeniedHttpException('Vous n\'avez pas le droit d\'éditer cet article.');
+                        throw new AccessDeniedHttpException('Vous n\'avez pas le droit de supprimer cet article.');
                 }
                 
                 $em = $this->getDoctrine()->getEntityManager();
