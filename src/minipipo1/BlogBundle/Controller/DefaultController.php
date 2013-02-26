@@ -25,8 +25,8 @@ class DefaultController extends Controller {
                 );
                 
                 $pagination_data = $pagination->getPaginationData();
-                if ($page >$pagination_data["pageCount"])
-                         throw $this->createNotFoundException('Page inexistante.');
+                //if ($page >$pagination_data["pageCount"])
+                         //throw $this->createNotFoundException('Page inexistante.');
                 
                 return $this->render('minipipo1BlogBundle:Blog:index.html.twig', array('pagination' => $pagination));
         }
